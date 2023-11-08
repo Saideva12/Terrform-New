@@ -54,3 +54,24 @@ resource "aws_internet_gateway" "tf-internet-Gateway" {
     Name = "ecomm-internet"
   }
 }
+
+resource "aws_route_table" "tf-ecomm-pub-route-table" {
+  vpc_id = aws_vpc.tf-ecomm-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.tf-internet-Gateway.id
+  }
+
+  tags = {
+    Name = "ecomm-public-route-table"
+  }
+}
+
+resource "aws_route_table" "tf-ecomm-private-route-table" {
+  vpc_id = aws_vpc.tf-ecomm-vpc.id
+
+  tags = {
+    Name = "ecomm-private-route-table"
+  }
+}
