@@ -75,3 +75,75 @@ resource "aws_route_table" "tf-ecomm-private-route-table" {
     Name = "ecomm-private-route-table"
   }
 }
+
+resource "aws_route_table_association" "tf-ecomm-assoc-rt-pub-sub-A" {
+  subnet_id      = aws_subnet.tf-ecomm-pub-sub-A.id
+  route_table_id = aws_route_table.tf-ecomm-pub-route-table.id
+}
+
+resource "aws_route_table_association" "tf-ecomm-assoc-rt-pub-sub-B" {
+  subnet_id      = aws_subnet.tf-ecomm-pub-sub-B.id
+  route_table_id = aws_route_table.tf-ecomm-pub-route-table.id
+}
+
+resource "aws_route_table_association" "tf-ecomm-assoc-rt-pvt-sub-A" {
+  subnet_id      = aws_subnet.tf-ecomm-pvt-sub-A.id
+  route_table_id = aws_route_table.tf-ecomm-private-route-table.id
+}
+
+resource "aws_route_table_association" "tf-ecomm-assoc-rt-pvt-sub-B" {
+  subnet_id      = aws_subnet.tf-ecomm-pvt-sub-B.id
+  route_table_id = aws_route_table.tf-ecomm-private-route-table.id
+}
+
+resource "aws_network_acl" "tf-ecomm-Nacl-public" {
+  vpc_id = aws_vpc.tf-ecomm-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "ecomm-Nacl-Public"
+  }
+}
+
+resource "aws_network_acl" "tf-ecomm-Nacl-private" {
+  vpc_id = aws_vpc.tf-ecomm-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "ecomm-Nacl-Private"
+  }
+}
