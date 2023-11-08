@@ -147,3 +147,23 @@ resource "aws_network_acl" "tf-ecomm-Nacl-private" {
     Name = "ecomm-Nacl-Private"
   }
 }
+
+resource "aws_network_acl_association" "tf-ecomm-nacl-pub-sub-A" {
+  network_acl_id = aws_network_acl.tf-ecomm-Nacl-public.id
+  subnet_id  = aws_subnet.tf-ecomm-pub-sub-A.id
+}
+
+resource "aws_network_acl_association" "tf-ecomm-nacl-pub-sub-B" {
+  network_acl_id = aws_network_acl.tf-ecomm-Nacl-public.id
+  subnet_id  = aws_subnet.tf-ecomm-pub-sub-B.id
+}
+
+resource "aws_network_acl_association" "tf-ecomm-nacl-pvt-sub-A" {
+  network_acl_id = aws_network_acl.tf-ecomm-Nacl-private.id
+  subnet_id  = aws_subnet.tf-ecomm-pvt-sub-A.id
+}
+
+resource "aws_network_acl_association" "tf-ecomm-nacl-pvt-sub-B" {
+  network_acl_id = aws_network_acl.tf-ecomm-Nacl-private.id
+  subnet_id  = aws_subnet.tf-ecomm-pvt-sub-B.id
+}
