@@ -46,3 +46,11 @@ resource "aws_subnet" "tf-ecomm-pvt-sub-B" {
     Name = "ecomm-private-sub-B"
   }
 }
+
+resource "aws_internet_gateway" "tf-internet-Gateway" {
+  vpc_id = aws_vpc.tf-ecomm-vpc.id
+
+  tags = {
+    Name = "ecomm-internet"
+  }
+}
