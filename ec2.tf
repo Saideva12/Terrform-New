@@ -30,3 +30,20 @@ resource "aws_security_group" "tf-ecomm-pub-SG" {
     Name = "ecomm-Security"
   }
 }
+
+
+
+#Instance
+
+resource "aws_instance" "ecomm-web" {
+  ami                     = "ami-07b36ea9852e986ad"
+  instance_type           = "t2.micro"
+  subnet_id = aws_subnet.tf-ecomm-pub-sub-A.id
+  key_name = "terraform"
+  vpc_security_group_ids = [aws_security_group.tf-ecomm-pub-SG.id]
+  user_data = file("webapp.sh")
+
+  tags = {
+  Name= "ecomm-server"
+  }
+}
